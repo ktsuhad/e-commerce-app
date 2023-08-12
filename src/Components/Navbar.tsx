@@ -13,10 +13,14 @@ import {
   Close,
 } from "@mui/icons-material";
 import { Tooltip } from "@mui/material";
+import { useSelector } from "react-redux";
+import { RootState } from "../Store/Store";
 
 const Navbar = () => {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [toggle, setToggle] = useState(false);
+
+  const { items } = useSelector((state: RootState) => state.cart);
 
   return (
     <>
@@ -101,7 +105,7 @@ const Navbar = () => {
                 <p className="">Help</p>
               </Link>
               <Link
-                to="/login"
+                to="/"
                 className="flex items-center gap-4 cursor-pointer  hover:bg-gray-700 hover:text-white px-2 py-2 z-30"
               >
                 <span>
@@ -117,7 +121,7 @@ const Navbar = () => {
                 <span className="material-symbols-outlined relative">
                   <ShoppingCart />
                   <span className="text-sm absolute -top-4 text-pink-600 ">
-                    {/* {items.length} */}0
+                    {items.length}
                   </span>
                 </span>
               </Tooltip>
@@ -133,7 +137,7 @@ const Navbar = () => {
           <MenuOutlined />
         </button>
       </div>
-      
+
       {/* menubar on mobile */}
       {isMenuOpen && (
         <>

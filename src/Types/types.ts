@@ -1,4 +1,4 @@
-export interface Product {
+export interface ProductType {
     id: number;
     title: string;
     description: string;
@@ -10,4 +10,10 @@ export interface Product {
     category: string;
     thumbnail: string;
     images: string[];
+  }
+
+
+  export interface cartProductType extends ProductType {
+    quantity:number,
+    totalPrice:number
   }

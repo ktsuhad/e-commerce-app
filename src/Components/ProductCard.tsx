@@ -2,13 +2,23 @@ import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import React from "react";
 import { FavoriteBorderOutlined } from "@mui/icons-material";
-import { Product } from "../Types/types";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../Store/Store";
+import { addTocart } from "../Feature/cartSlice";
+import { ProductType } from "../Types/types";
 
 interface ProductCardProps {
-  product: Product;
+  product: ProductType;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const dispatch: AppDispatch = useDispatch(); //dispatch
+
+  //handleAddToCart function
+  const handleAddToCart = (product:any) => {
+    dispatch(addTocart(product));
+  };
+
   return (
     <div className="w-64">
       <Link
@@ -35,6 +45,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             fullWidth
             size="small"
             style={{ backgroundColor: "green", marginTop: "5px" }}
+            onClick={()=>handleAddToCart(product)} //calling handleAddToCart function
           >
             Add to Cart
           </Button>
