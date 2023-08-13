@@ -31,9 +31,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </span>
       </Link>
       <div className="flex flex-col gap-3">
-        <div className="flex justify-between">
-          <h1 className="font-bold">{product.title}</h1>
-          <span className="font-bold">$ {product.price}</span>
+        <div className="flex items-center">
+          <h1 className="flex-[4] font-bold text-sm truncate text-start">{product.title}</h1>
+          <p className="font-bold flex-1">$ {product.price}</p>
         </div>
         <p className="text-ellipsis whitespace-nowrap overflow-hidden text-sm text-gray-500">
           {product.description}

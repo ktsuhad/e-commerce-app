@@ -3,7 +3,7 @@ import ProductCard from "./ProductCard";
 
 const ProductListing = () => {
   return (
-    <div className="text-center">
+    <div >
       <h1 className="text-lg font-bold py-5">For You!</h1>
 
       {/* Mapping product cards */}

@@ -1,6 +1,5 @@
-import { Button, ButtonGroup } from "@mui/material";
-// import StarRating from "../../../components/Rating/Rating";
-import { useEffect, useState } from "react";
+import { Button } from "@mui/material";
+import {  useState } from "react";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { useParams } from "react-router-dom";
@@ -26,13 +25,13 @@ const ProductDetails = () => {
         <Zoom>
           <div
             style={{ backgroundColor: selectedColor }}
-            className="p-2 flex items-center justify-center rounded-md w-full h-[500px]"
+            className="p-1 flex items-center justify-center rounded-md w-full h-[500px]"
           >
             {product && (
               <img
-                src={product.images[0]}
+                src={product.thumbnail}
                 alt="Product"
-                className="w-1/2 h-auto "
+                className="w-full h-full"
               />
             )}
           </div>
@@ -44,7 +43,7 @@ const ProductDetails = () => {
               key={product.id}
               src={productImg}
               alt={product.images[0]}
-              className="w-56 h-56 p-3 bg-gray-400 rounded-md"
+              className="w-64 h-72 p-3 rounded-md "
             />
           ))}
         </div>
@@ -54,7 +53,6 @@ const ProductDetails = () => {
       <div className="flex-1 px-5">
         <h1 className="font-bold text-lg">{product?.title}</h1>
         <div className="flex items-center gap-4 text-sm">
-          {/* <StarRating /> */}
           <span>In stock</span>
         </div>
         <p className="text-sm">{product?.description}</p>
@@ -85,20 +83,9 @@ const ProductDetails = () => {
           </div>
           <div className="flex justify-between py-2 mt-2 text-sm font-normal">
             <span>Brand</span>
-            <span>Boat</span>
+            <span>{product?.brand}</span>
           </div>
         </div>
-        <h2 className="font-bold py-3">Select Size</h2>
-        <ButtonGroup
-          variant="contained"
-          color="info"
-          disableElevation
-          aria-label="Disabled elevation buttons"
-        >
-          <Button>Small</Button>
-          <Button>Medium</Button>
-          <Button>Large</Button>
-        </ButtonGroup>
         <h1 className="font-bold mt-5">Select Color</h1>
         <div className="py-3 flex gap-2">
           <Button

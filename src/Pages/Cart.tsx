@@ -93,7 +93,7 @@ const Cart = () => {
         </ul>
         <div className=" bg-white flex border-y border-x-0 py-5 border-gray-300 mb-20">
           <div className="flex-1 flex flex-col justify-center gap-2">
-            <a href="#" className="text-xs text-blue-700">
+            <a href="/" className="text-xs text-blue-700">
               View Price details
             </a>
           </div>

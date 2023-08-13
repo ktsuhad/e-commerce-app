@@ -59,7 +59,7 @@ const Navbar = () => {
         <span className="flex items-center gap-3 order-2 md:order-4 relative">
           <button
             className="hover:bg-gray-200 hover:rounded-full w-10 h-10 flex items-center justify-center"
-            // onBlur={() => setToggle(false)}
+            onBlur={() => setToggle(false)}
             onFocus={() => setToggle(true)}
           >
             <Tooltip title="profile">
