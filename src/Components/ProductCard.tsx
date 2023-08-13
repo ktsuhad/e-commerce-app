@@ -15,7 +15,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const dispatch: AppDispatch = useDispatch(); //dispatch
 
   //handleAddToCart function
-  const handleAddToCart = (product:any) => {
+  const handleAddToCart = (product: any) => {
     dispatch(addTocart(product));
   };
 
@@ -32,20 +32,21 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       </Link>
       <div className="flex flex-col gap-3">
         <div className="flex items-center">
-          <h1 className="flex-[4] font-bold text-sm truncate text-start">{product.title}</h1>
+          <h1 className="flex-[4] font-bold text-sm truncate text-start">
+            {product.title}
+          </h1>
           <p className="font-bold flex-1">$ {product.price}</p>
         </div>
         <p className="text-ellipsis whitespace-nowrap overflow-hidden text-sm text-gray-500">
           {product.description}
         </p>
-        {/* <StarRating /> */}
         <div className="flex justify-center">
           <Button
             variant="contained"
             fullWidth
             size="small"
             style={{ backgroundColor: "green", marginTop: "5px" }}
-            onClick={()=>handleAddToCart(product)} //calling handleAddToCart function
+            onClick={() => handleAddToCart(product)} //calling handleAddToCart function
           >
             Add to Cart
           </Button>

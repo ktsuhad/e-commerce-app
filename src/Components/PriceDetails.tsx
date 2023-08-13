@@ -1,28 +1,40 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../Store/Store";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import { useState } from "react";
-import { Button } from "@mui/material";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import LoadingSVG from "./LoadingSvg";
 
-const PriceDeatails = () => {
+interface PriceDetailsProps {
+  userInfo: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    country: string;
+    street: string;
+    city: string;
+    state: string;
+  };
+}
+const PriceDeatails: React.FC<PriceDetailsProps> = ({ userInfo }) => {
   const [paymentError, setPaymentError] = useState<string | null>(null);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("card");
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const navigate = useNavigate(); // Get the history object
-
+  const navigate = useNavigate();
   const { items, totalDiscount, totalPrice } = useSelector(
     (state: RootState) => state.cart
   );
 
-  const totalPriceWithoutDiscount = items.reduce(
-    (acc, product) => acc + product.price,
-    0
-  );
-
   const stripe = useStripe();
   const elements = useElements();
+
+  // if the user info is filled out
+  const isUserInfoFilled = Object.values(userInfo).every(
+    (value) => value !== ""
+  );
+
+  //handlePaymentSubmit
   const handlePaymentSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -32,7 +44,12 @@ const PriceDeatails = () => {
     setIsProcessing(true);
     const cardElement = elements.getElement(CardElement);
     try {
-      const { token, error } = await stripe.createToken(cardElement!);
+      const { token, error } = await stripe.createToken(cardElement!, {
+        name: userInfo.firstName,
+        address_line1: userInfo.street,
+        address_city: userInfo.city,
+        address_state: userInfo.state,
+      });
 
       if (error) {
         setPaymentError(error.message as string);
@@ -43,7 +60,7 @@ const PriceDeatails = () => {
         setIsProcessing(false);
 
         // Navigate to the Success component
-        navigate("/success");
+        navigate("/success", { state: { userInfo } });
       }
     } catch (error) {
       console.error("Error processing payment:", error);
@@ -59,7 +76,7 @@ const PriceDeatails = () => {
         <h1 className="py-5 font-bold">Price Details</h1>
         <ul>
           <li className="flex justify-between">
-            Price({items.length})<span>${totalPriceWithoutDiscount}</span>
+            Price({items.length})<span>${totalPrice}</span>
           </li>
           <li className="flex justify-between ">
             Discount
@@ -71,7 +88,7 @@ const PriceDeatails = () => {
           </li>
           <li className="flex justify-between pt-5 font-bold">
             Total Amount
-            <span>${totalPrice}</span>
+            <span>${totalPrice - totalDiscount}</span>
           </li>
           <li className="text-green-600 py-5">
             You will save ${totalDiscount} on this order
@@ -79,7 +96,9 @@ const PriceDeatails = () => {
         </ul>
         <div className=" bg-white flex border-y border-x-0 py-5 border-gray-300 mb-20">
           <div className="flex-1  flex flex-col justify-center gap-2">
-            <p className="font-semibold tracking-wide">{totalPrice}</p>
+            <p className="font-semibold tracking-wide">
+              ${totalPrice - totalDiscount}
+            </p>
           </div>
           <div className="flex-1  flex flex-col justify-center items-end  ">
             <button className="bg-amber-400 w-max p-2 px-2 rounded-sm text-sm">
@@ -133,14 +152,20 @@ const PriceDeatails = () => {
             <CardElement />
           </div>
         )}
-
-        <Button
-          variant="contained"
+        {/* Show user info error message */}
+        {!isUserInfoFilled && (
+          <div className="text-red-500 mt-2">
+            Please fill out all the required user information.
+          </div>
+        )}
+        {/* payment button */}
+        <button
           onClick={handlePaymentSubmit}
-          className="bg-blue-500 text-white px-3 py-2 rounded-md mt-3"
+          className="bg-blue-500 text-white px-3 py-2 rounded-md mt-3 w-24"
+          disabled={isProcessing || !isUserInfoFilled} // Disable the button while processing or if user info is not filled
         >
-          Pay Now
-        </Button>
+          {isProcessing ? <LoadingSVG /> : "Pay Now"}
+        </button>
       </div>
     </>
   );

@@ -9,7 +9,7 @@ const Cart = () => {
     (state: RootState) => state.cart
   );
 
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch(); //dispatch
 
   return (
     <div className="flex flex-col md:flex-row container mx-auto py-5 h-screen">
@@ -39,14 +39,14 @@ const Cart = () => {
                 <td className="text-start py-3 ">{product.price}</td>
                 <td className="text-start py-3 ">
                   <button
-                    className="bg-blue-600 px-2"
+                    className="bg-blue-600 text-white rounded-md w-10 h-7"
                     onClick={() => dispatch(decrementQuantity(product.id))}
                   >
                     -
                   </button>
                   <span className="px-3">{product.quantity}</span>
                   <button
-                    className="bg-blue-600 px-2"
+                    className="bg-blue-600 text-white rounded-md w-10 h-7"
                     onClick={() => dispatch(incrementQuantity(product.id))}
                   >
                     +
@@ -92,17 +92,14 @@ const Cart = () => {
           </li>
         </ul>
         <div className=" bg-white flex border-y border-x-0 py-5 border-gray-300 mb-20">
-          <div className="flex-1 flex flex-col justify-center gap-2">
-            <a href="/" className="text-xs text-blue-700">
-              View Price details
-            </a>
-          </div>
+          <span className="font-bold">${totalPrice - totalDiscount}</span>
           <div className="flex-1  flex flex-col justify-center items-end  ">
             <button className="bg-amber-400 w-max p-2 px-2 rounded-sm text-sm">
               CONTACT NOW
             </button>
           </div>
         </div>
+
         {/* //payment checkout */}
         <Link to={"/checkout"} className="flex justify-center">
           <Button variant="contained" style={{ backgroundColor: "green" }}>

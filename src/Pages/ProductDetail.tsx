@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import {  useState } from "react";
+import { useState } from "react";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { useParams } from "react-router-dom";
@@ -13,7 +13,7 @@ const ProductDetails = () => {
   const { productId } = useParams();
   console.log(productId);
 
-  const product = productData.find((item) => item.id === Number(productId));
+  const product = productData.find((item) => item.id === Number(productId));  //find product
 
   const handleColorButtonClick = (color: string) => {
     setSelectedColor(color);
@@ -31,7 +31,7 @@ const ProductDetails = () => {
               <img
                 src={product.thumbnail}
                 alt="Product"
-                className="w-full h-full"
+                className="w-full h-full object-cover"
               />
             )}
           </div>
