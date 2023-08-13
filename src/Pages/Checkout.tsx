@@ -3,9 +3,7 @@ import { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import PriceDeatails from "../Components/PriceDeatails";
 
-const stripePromise = loadStripe(
-  "pk_test_51NJZ3ISC55QffNktB8pqGrG4zc87pO6qoDUp79bH5Heoa8APlzpGdzf8wNiCNK7fWcM7jYHVz4aYNVtJnrFD779e00AQjebM8y"
-);
+const stripePromise = loadStripe(process.env.REACT_APP_SECRETE_KEY!);
 
 const Checkout = () => {
   const [firstName, setFirstName] = useState("");
@@ -72,7 +70,7 @@ const Checkout = () => {
         <textarea
           name="address"
           value={street}
-          onChange={(e)=>setStreet(e.target.value)}
+          onChange={(e) => setStreet(e.target.value)}
           className="w-full border border-gray-400 rounded-md px-2 py-1 focus:ring-2 focus:outline-none "
         ></textarea>
         <div className="flex flex-wrap gap-5 mt-5">
